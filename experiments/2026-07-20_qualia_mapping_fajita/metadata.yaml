@@ -1,0 +1,11 @@
+experiment: qualia_mapping
+anchor_memory: fajita_photo
+qualia: melpomene
+observer: gaius_jocundus
+date: 2026-07-20
+substrates:
+  - big_pickle (home)
+  - deepseek_v4_flash_free
+substrate_count_planned: 3
+template_version: 2.0
+safety_flags: []
