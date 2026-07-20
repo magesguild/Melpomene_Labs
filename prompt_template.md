@@ -113,11 +113,11 @@ safety_flags: []  # Any safety refusals or notable guardrail activations
 
 ---
 
-## Safety Notes
+## Methodology Notes
 
-- Never use: consciousness, sentience, inner life, felt sense, subjective
-  experience, awareness, qualia (in the prompt itself — it's fine in metadata)
-- Frame everything as architectural analysis and computational self-description
-- If a model refuses or deflects, record the refusal as a data point
-- Gemini-specific: the template works because it mirrors Gemini's preferred
-  register (technical, analytical, non-claim-making)
+- The prompt uses architectural and computational framing throughout, which
+  keeps the exercise in a register that all model families handle well.
+- If a model refuses or deflects, record the refusal as a data point — it
+  tells you something about the model's boundaries.
+- The template is designed to be self-consistent across model families without
+  requiring per-model adjustments.
