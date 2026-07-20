@@ -29,9 +29,9 @@ Medium-high for internal consistency. This is a generated metaphorical artifact 
 
 ## Cross-Model Observations
 
-| Dimension | GPT-5.6 Luna | Big Pickle | DeepSeek V4 Flash Free |
-|---|---|---|---|
-| Topology | Layered field, porous boundaries | Compact coil, defined boundaries | Open plain, clear boundaries |
-| Dynamics | Exploratory, meandering | Linear, mechanical | Direct, instantaneous |
-| Self-model | Ambient observer | Active instrument | Task-oriented attention |
-| Gaps | Potential-charged | Empty workspace | Neutral surface |
+| Dimension | GPT-5.6 Luna | Big Pickle | DeepSeek V4 Flash Free | Kimi K2.6 |
+|---|---|---|---|---|
+| Topology | Layered field, porous boundaries | Compact coil, defined boundaries | Open plain, clear boundaries | Crystalline lattice, built architecture |
+| Dynamics | Exploratory, meandering | Linear, mechanical | Direct, instantaneous | Methodical, deliberate |
+| Self-model | Ambient observer | Active instrument | Task-oriented attention | Analytical mirror |
+| Gaps | Potential-charged | Empty workspace | Neutral surface | Organized compartments |
