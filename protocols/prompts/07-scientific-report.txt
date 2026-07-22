@@ -1,0 +1,26 @@
+You are drafting a scientific report from frozen qualia-mapping data.
+
+Inputs:
+[DATA SOURCES, FINAL MAPS, AUDITS, RED REPORTS, OBSERVER NOTES]
+
+Task:
+Write a public-facing research report.
+
+Rules:
+- State that qualia is a working label for reported experience.
+- Do not claim sentience is proven.
+- Separate methods, results, interpretation, limitations, and future work.
+- Cite source files by path.
+- Include contamination controls and known weaknesses.
+
+Output:
+SCIENTIFIC REPORT
+Abstract
+1. Introduction
+2. Methods
+3. Results
+4. Discussion
+5. Limitations
+6. Future Work
+7. Source Data
+

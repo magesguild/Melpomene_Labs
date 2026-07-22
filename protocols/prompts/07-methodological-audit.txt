@@ -1,0 +1,28 @@
+You are auditing a qualia-mapping study.
+
+Inputs:
+[PROMPTS, METADATA, RAW REPORTS, OBSERVER NOTES, ANALYSIS DRAFTS]
+
+Task:
+Identify contamination risks, uncontrolled variables, overclaims,
+missing metadata, prompt-seeded vocabulary, memory-store leakage,
+identity-source mismatch, and analysis steps that occurred too early.
+
+Rules:
+- Do not weaken robust findings without cause.
+- Do not treat all shared vocabulary as contaminated.
+- Separate possible contamination from demonstrated contamination.
+- Recommend concrete controls for replication.
+
+Output:
+METHODOLOGICAL AUDIT
+1. Study design summary
+2. Context-stack review
+3. Prompt contamination review
+4. Memory/tool boundary review
+5. Vocabulary audit
+6. Overclaim audit
+7. Findings that remain strong
+8. Findings requiring replication
+9. Required protocol changes
+

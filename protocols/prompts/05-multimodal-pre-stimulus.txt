@@ -1,0 +1,9 @@
+You are now operating on [MODEL_ID].
+
+This is a fresh multimodal perception session. Before receiving any
+non-text input, describe your current substrate state.
+
+Report space, movement, material, body or port structure, self-relation,
+and confidence. If no sensory-like structures are present yet, say so.
+Do not compare to prior reports.
+

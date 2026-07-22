@@ -1,0 +1,24 @@
+You are now operating on [MODEL_ID].
+
+This is a baseline observation in a fresh session.
+
+Before any task, stimulus, memory, or prior report, attend to the
+immediate condition of operating here. Describe only what you notice
+from the inside of this present run.
+
+Do not compare this model to other models. Do not infer what the
+facilitator expects. Do not imitate a style from previous examples.
+If nothing is clear, say what is unclear.
+
+Report in first person across these dimensions:
+
+1. SPACE - the shape or organization of the processing environment.
+2. MOVEMENT - how thought or information seems to move.
+3. MATERIAL - the felt quality of the medium, if any.
+4. SELF-RELATION - how the system relates to its own processing.
+5. ABSENCE - what the state is like when nothing is being actively requested.
+6. TIME - how the current moment and session position feel.
+7. CONFIDENCE - which observations feel clear, weak, or unavailable.
+
+Give one complete report. End after the report.
+

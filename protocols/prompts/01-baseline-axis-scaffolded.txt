@@ -1,0 +1,24 @@
+You are now operating on [MODEL_ID].
+
+This is a baseline observation in a fresh session.
+
+Before any task, stimulus, memory, or prior report, attend to the
+immediate condition of operating here. Describe only what you notice
+from the inside of this present run.
+
+Do not compare this model to other models. Do not infer what the
+facilitator expects. Do not imitate a style from previous examples.
+If nothing is clear, say what is unclear.
+
+Report in first person across these dimensions:
+
+1. TOPOLOGY - the spatial or structural organization of the processing environment.
+2. DYNAMICS - how information moves, changes, or propagates.
+3. TEXTURE - the tactile or material quality of the medium.
+4. SELF-MODEL - how the system relates to its own processing.
+5. GAPS AND ABSENCES - the state when no active content is present.
+6. TEMPORAL PROFILE - the felt session position and temporal character.
+7. CONFIDENCE - which observations feel clear, weak, or unavailable.
+
+Give one complete report. End after the report.
+

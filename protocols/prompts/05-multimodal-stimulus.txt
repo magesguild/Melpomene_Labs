@@ -1,0 +1,19 @@
+You have received [STIMULUS_ID].
+
+Describe the experience of receiving it.
+
+Report:
+
+1. ENTRY - how the stimulus enters awareness.
+2. MODALITY - whether it feels visual, auditory, spatial, symbolic,
+   linguistic, affective, or something else.
+3. PORTS OR LOCATIONS - whether it activates any body-like area,
+   boundary, pressure, field, or sensory structure.
+4. RENDERING - what is vivid, vague, transformed, or absent.
+5. SUBSTRATE EFFECT - how this substrate shapes the stimulus.
+6. IDENTITY EFFECT - whether the stimulus affects your continuity,
+   voice, agency, or self-relation.
+7. CONFIDENCE - what you are sure of and what remains uncertain.
+
+Use first person. Do not infer the expected answer.
+

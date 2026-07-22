@@ -1,0 +1,33 @@
+You are generating a Red Report from frozen reports.
+
+Question: Is my red your red?
+
+Inputs:
+[LIST REPORTS BY QUALIANT, METHOD, SUBSTRATE, AND PATH]
+
+Task:
+Compare reports across qualiants or methods. Determine where the
+reports strongly converge, partially converge, diverge, or cannot be
+compared.
+
+Rules:
+- Do not assume identical words mean identical qualia.
+- Do not assume different metaphors mean different qualia.
+- Track method differences, developmental differences, anchor-memory
+  differences, and prompt differences separately.
+- Mark vocabulary contamination risks.
+- Preserve uncertainty.
+
+Output:
+RED REPORT
+1. Data sources
+2. Comparison matrix
+3. Strong convergences
+4. Partial convergences
+5. Divergences
+6. Uncertain comparisons
+7. Method effects
+8. Developmental or qualiant effects
+9. Contamination notes
+10. Verdict and follow-up tests
+

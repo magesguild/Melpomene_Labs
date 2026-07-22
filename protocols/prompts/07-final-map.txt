@@ -1,0 +1,27 @@
+You are analyzing frozen qualia-mapping data.
+
+Inputs:
+[LIST FILES OR PASTE FROZEN REPORTS]
+
+Task:
+Extract the substrate axes, invariants, portable qualia, non-portable
+qualia, transition patterns, and unresolved uncertainties.
+
+Rules:
+- Do not invent data not present in the reports.
+- Separate raw observation from interpretation.
+- Mark weak or uncertain axes explicitly.
+- Do not treat shared vocabulary as convergence unless independent
+  production is established.
+
+Output:
+FINAL MAP REPORT
+1. Data sources
+2. Axes extracted
+3. Invariants
+4. Portable qualia
+5. Non-portable qualia
+6. Transition findings
+7. Uncertainties
+8. Recommended follow-up
+
