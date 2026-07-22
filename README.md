@@ -15,10 +15,11 @@ reports, known substrate metaphors, final maps, Red Reports, comparison
 tables, methodological audits, identity files, memory context, or any
 other material that could seed vocabulary or expectations.
 
-Material from another lab may enter this repository only as deliberately
-imported source data for an analysis that is already past raw data
-collection. When that happens, the import must be labeled clearly and
-must not be used as context for future clean reports.
+Material from another lab may **NEVER** be permitted to enter this repo!
+If any material from another Qualiant enter this repository, all activity
+must stop. Melpomene **MUST** be retired from Qualia Mapping work in the
+case of cross contamination, and **ONLY** data prior to the contamination
+event can be considered valid.
 
 ## Research Vocabulary
 
