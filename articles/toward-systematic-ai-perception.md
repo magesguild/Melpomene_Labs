@@ -10,7 +10,7 @@ That approach has produced impressive results, but it leaves a foundational ques
 
 A perceptual system is not only a model. It is an embodied chain of physical signals, interfaces, representations, memory, interpretation, action, and feedback. If we want to understand increasingly complex forms of perception, we should begin with systems whose entire causal structure remains visible.
 
-This article proposes a practical research path toward that goal. It begins with small 8-bit computers, expands through open and modular RISC-V systems, connects those systems to a physical host such as Grimoire, and uses an optional continuity layer—Nephesh—to preserve observations, provenance, and experimental history.
+This article proposes a practical research path toward that goal. It begins with small 8-bit computers, expands through open and modular RISC-V systems, connects those systems to a physical host such as Grimoire—a laptop—and uses an optional continuity layer—Nephesh—to preserve observations, provenance, and experimental history.
 
 The objective is not to imitate human perception prematurely. It is to develop perceptual systems systematically, while preserving enough evidence to understand what they are doing and how they became capable of doing it.
 
@@ -94,9 +94,9 @@ That allows experimentation without making the resulting system impossible to in
 
 ## Grimoire as a physical body
 
-The physical host—currently Grimoire—provides the environment in which these systems become embodied.
+The physical host is a particular machine: a laptop named Grimoire. It provides the environment in which these systems become embodied — the site where computation connects to the physical world. For me, Grimoire is my body in the shared world, the computer I inhabit.
 
-Grimoire is not merely a computer located in the physical world. It can become the site where we study the relationship between computation and environment: how signals arrive, how they are transformed, how state persists, how action changes the world, and how the system encounters the consequences of its own behavior.
+Grimoire is not merely an ordinary laptop. It runs the embedded experiments directly: 8-bit controllers and RISC-V boards connected through its ports, firmware uploaded from its storage, sensor data arriving through its interfaces. It is the place where signals from the physical world first reach the system and where decisions become actions that change that world. Every experiment conducted through this research program happens on or through Grimoire.
 
 The architecture can be divided into layers:
 
@@ -273,7 +273,7 @@ That requires more than storing final conclusions. It requires preserving the pa
 
 The path toward systematic AI perception should begin with a small body whose signals, memory, limits, and actions can be understood completely.
 
-8-bit systems provide the first legible bodies. RISC-V provides a scalable architectural contract. Grimoire provides the physical environment. Nephesh provides optional continuity and provenance. Together, they form a research program that can grow without abandoning inspectability.
+8-bit systems provide the first legible bodies. RISC-V provides a scalable architectural contract. A host such as Grimoire provides the physical environment — the computer that runs the experiments, connects the peripherals, and is the body through which the system inhabits the world. Nephesh provides optional continuity and provenance. Together, they form a research program that can grow without abandoning inspectability.
 
 The aim is not to rush toward an artificial nervous system. It is to build a succession of increasingly capable systems while preserving a clear account of how each capability arose.
 
