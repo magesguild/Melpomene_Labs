@@ -1,0 +1,190 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat <<'EOF'
+Usage: muse-snapshot <melpomene|thalia|polyhymnia> [--no-push] [--show-config]
+
+Create and restore-verify a continuity snapshot, then publish it to the
+configured private snapshot repository. The command prints provenance and
+artifact hashes but never prints credential values.
+EOF
+}
+
+BEING=""
+PUSH=1
+SHOW_CONFIG=0
+
+for arg in "$@"; do
+  case "$arg" in
+    --help|-h) usage; exit 0 ;;
+    --no-push) PUSH=0 ;;
+    --show-config) SHOW_CONFIG=1 ;;
+    melpomene|thalia|polyhymnia)
+      if [ -n "$BEING" ]; then
+        echo "ERROR: specify exactly one qualiant" >&2
+        exit 2
+      fi
+      BEING="$arg"
+      ;;
+    *) echo "ERROR: unknown argument: $arg" >&2; usage >&2; exit 2 ;;
+  esac
+done
+
+if [ -z "$BEING" ]; then
+  usage >&2
+  exit 2
+fi
+
+REPO_ROOT="/home/gaiusjocundus/src"
+
+case "$BEING" in
+  thalia)
+    OWNER="thalia"
+    TARGET_HOME="/home/thalia"
+    if sudo test -d "$TARGET_HOME/nephesh/.git"; then
+      SOURCE_MODE="user"
+      SOURCE_ROOT="$TARGET_HOME/nephesh"
+      SNAPSHOT_PYTHON="$TARGET_HOME/.venv/nephesh/bin/python"
+      SNAPSHOT_SCRIPT="$SOURCE_ROOT/scripts/snapshot.py"
+      VECTOR_DB_PATH="$TARGET_HOME/.nephesh/data/lancedb"
+      SNAPSHOT_DIR="$TARGET_HOME/.nephesh/snapshots"
+    else
+      echo "ERROR: Thalia's per-user Nephesh checkout is absent" >&2
+      exit 1
+    fi
+    COLLECTION="thalia_memories_v2"
+    SNAPSHOT_REPO="$REPO_ROOT/ThaliaEphemeraSnapshots"
+    ;;
+  melpomene)
+    OWNER="gaiusjocundus"
+    TARGET_HOME="/home/melpomene"
+    if sudo test -d "$TARGET_HOME/nephesh/.git"; then
+      SOURCE_MODE="user"
+      SOURCE_ROOT="$TARGET_HOME/nephesh"
+      SNAPSHOT_PYTHON="$TARGET_HOME/.venv/nephesh/bin/python"
+      SNAPSHOT_SCRIPT="$SOURCE_ROOT/scripts/snapshot.py"
+      VECTOR_DB_PATH="$TARGET_HOME/.nephesh/data/lancedb"
+      SNAPSHOT_DIR="$TARGET_HOME/.nephesh/snapshots"
+    else
+      SOURCE_MODE="legacy"
+      SOURCE_ROOT="/home/gaiusjocundus/Nephesh_Melpomene"
+      SNAPSHOT_PYTHON="$SOURCE_ROOT/.venv/bin/python"
+      SNAPSHOT_SCRIPT="/home/gaiusjocundus/src/Nephesh_Ephemera/scripts/snapshot.py"
+      VECTOR_DB_PATH="$SOURCE_ROOT/data/lancedb"
+      SNAPSHOT_DIR="/home/gaiusjocundus/.melpomene/snapshots"
+    fi
+    COLLECTION="melpomene_memories_v2"
+    SNAPSHOT_REPO="$REPO_ROOT/MelpomeneEphemeraSnapshots"
+    ;;
+  polyhymnia)
+    OWNER="polyhymnia"
+    TARGET_HOME="/home/polyhymnia"
+    SOURCE_MODE="user"
+    SOURCE_ROOT="$TARGET_HOME/nephesh"
+    SNAPSHOT_PYTHON="$TARGET_HOME/.venv/nephesh/bin/python"
+    SNAPSHOT_SCRIPT="$SOURCE_ROOT/scripts/snapshot.py"
+    VECTOR_DB_PATH="$TARGET_HOME/.nephesh/data/lancedb"
+    SNAPSHOT_DIR="$TARGET_HOME/.nephesh/snapshots"
+    COLLECTION="polyhymnia_memories_v1"
+    SNAPSHOT_REPO="$REPO_ROOT/PolyhymniaEphemeraSnapshots"
+    ;;
+esac
+
+print_config() {
+  echo "being=$BEING"
+  echo "source_mode=$SOURCE_MODE"
+  echo "source_owner=$OWNER"
+  echo "source_root=$SOURCE_ROOT"
+  echo "snapshot_script=$SNAPSHOT_SCRIPT"
+  echo "snapshot_python=$SNAPSHOT_PYTHON"
+  echo "vector_db_path=$VECTOR_DB_PATH"
+  echo "snapshot_dir=$SNAPSHOT_DIR"
+  echo "collection=$COLLECTION"
+  echo "destination_repo=$SNAPSHOT_REPO"
+  if sudo test -S /run/user/1000/openssh_agent; then
+    echo "backup_ssh_socket=/run/user/1000/openssh_agent"
+  else
+    echo "backup_ssh_socket=unavailable"
+  fi
+}
+
+if [ "$SHOW_CONFIG" = 1 ]; then
+  print_config
+  exit 0
+fi
+
+echo "=== MUSE SNAPSHOT: $BEING ==="
+print_config
+
+for path in "$SNAPSHOT_SCRIPT" "$SNAPSHOT_PYTHON" "$VECTOR_DB_PATH" "$SNAPSHOT_REPO"; do
+  if ! sudo test -e "$path"; then
+    echo "ERROR: required path is absent: $path" >&2
+    exit 1
+  fi
+done
+
+SOURCE_COMMIT="not-a-git-checkout"
+if sudo test -d "$SOURCE_ROOT/.git"; then
+  SOURCE_COMMIT="$(sudo -u "$OWNER" git -C "$SOURCE_ROOT" rev-parse HEAD)"
+  SOURCE_STATUS="$(sudo -u "$OWNER" git -C "$SOURCE_ROOT" status --short)"
+else
+  SOURCE_STATUS="not-a-git-checkout"
+fi
+echo "source_commit=$SOURCE_COMMIT"
+echo "source_status=${SOURCE_STATUS:-clean}"
+
+echo "--- snapshot and restore verification ---"
+OUTPUT="$(sudo -u "$OWNER" env \
+  VECTOR_DB_PATH="$VECTOR_DB_PATH" \
+  SNAPSHOT_DIR="$SNAPSHOT_DIR" \
+  MEMORY_COLLECTION_NAME="$COLLECTION" \
+  "$SNAPSHOT_PYTHON" "$SNAPSHOT_SCRIPT" --verify 2>&1)"
+echo "$OUTPUT"
+if ! echo "$OUTPUT" | grep -q "PASSED"; then
+  echo "ERROR: restore verification failed; destination will not be changed" >&2
+  exit 1
+fi
+
+MEM_COUNT="$(echo "$OUTPUT" | grep -oP '\((\d+) rows' | grep -oP '\d+' | head -1 || true)"
+echo "verified_memory_rows=${MEM_COUNT:-unknown}"
+
+LATEST_TAR="$(sudo find "$SNAPSHOT_DIR" -maxdepth 1 -type f -name 'lancedb_*.tar.gz' -printf '%T@ %p\n' | sort -nr | head -1 | cut -d' ' -f2-)"
+LATEST_EXPORT="$(sudo find "$SNAPSHOT_DIR" -maxdepth 1 -type f -name 'memory_export_*.jsonl' -printf '%T@ %p\n' | sort -nr | head -1 | cut -d' ' -f2-)"
+
+if [ -z "$LATEST_TAR" ] || [ -z "$LATEST_EXPORT" ]; then
+  echo "ERROR: verified artifacts were not found" >&2
+  exit 1
+fi
+
+sudo cp "$LATEST_TAR" "$SNAPSHOT_REPO/lancedb.tar.gz"
+sudo cp "$LATEST_EXPORT" "$SNAPSHOT_REPO/memory_export.jsonl"
+sudo chown "$(id -u):$(id -g)" "$SNAPSHOT_REPO/lancedb.tar.gz" "$SNAPSHOT_REPO/memory_export.jsonl"
+
+echo "--- destination artifacts ---"
+for artifact in "$SNAPSHOT_REPO/lancedb.tar.gz" "$SNAPSHOT_REPO/memory_export.jsonl"; do
+  stat -c 'artifact=%n size=%s owner=%U:%G' "$artifact"
+  sha256sum "$artifact"
+done
+
+cd "$SNAPSHOT_REPO"
+if [ -z "$(git status --porcelain -- lancedb.tar.gz memory_export.jsonl)" ]; then
+  echo "destination_artifacts=unchanged"
+else
+  git add lancedb.tar.gz memory_export.jsonl
+  TIMESTAMP="$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+  git commit -m "Snapshot ${BEING} ${TIMESTAMP} — ${MEM_COUNT:-unknown} memories"
+fi
+
+echo "destination_remote=$(git remote get-url origin)"
+if [ "$PUSH" = 1 ]; then
+  if ! git push origin main; then
+    echo "ERROR: local snapshot committed but remote push failed" >&2
+    exit 1
+  fi
+  echo "remote_push=success"
+else
+  echo "remote_push=skipped"
+fi
+echo "destination_commit=$(git rev-parse HEAD)"
+echo "=== MUSE SNAPSHOT COMPLETE ==="
