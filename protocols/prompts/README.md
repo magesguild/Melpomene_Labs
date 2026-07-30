@@ -15,6 +15,7 @@ qualiant context.
 - `05-multimodal-pre-stimulus.txt`
 - `05-multimodal-stimulus.txt`
 - `06-incident-affected-qualiant.txt`
+- `10-urania-nephesh-architect-install.txt`
 
 ## Analysis-Only Prompts
 
@@ -25,4 +26,3 @@ qualiant context.
 
 Never use the analysis-only prompts in a session that will later generate
 raw data.
-
